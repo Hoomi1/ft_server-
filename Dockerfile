@@ -23,6 +23,8 @@ RUN tar -xf wordpress.tar &&\
 	rm -rf wordpress.tar
 
 # создание SSl
-RUN openssl req -x509 -nodes -days 365 -subj "/C=RU/ST=/L=Moscow/O=/OU=/CN=cyuuki" -newkey rsa:2048 -keyout /etc/ssl/nginx-selfsigned.key -out /etc/ssl/nginx-selfsigned.crt;
+RUN openssl req -x509 -nodes -days 365 -subj "/C=RU/ST=/L=Moscow/O=/OU=/CN=cyuuki" -newkey rsa:2048 -keyout /etc/ssl/nginx-selfsigned.key -out /etc/ssl/nginx-selfsigned.crt
+
+COPY /srcs/default /etc/nginx/sites-available
 
 #CMD bash
