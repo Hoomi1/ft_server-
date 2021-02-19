@@ -7,9 +7,7 @@ RUN apt-get -y update && \
 # установка NGINX, MARIADB-SERVER, PHP, SSL,VIM
 RUN apt-get -y install nginx &&\
 	apt-get -y install mariadb-server &&\
-	apt-get -y install php7.3 \
-	php7.3-fpm default-mysql-server \
-	php-mysql &&\
+	apt-get -y install php7.3 php-mysql php-fpm php-pdo php-gd php-cli php-mbstring &&\
 	apt-get install openssl &&\
 	apt-get install -y vim
 
@@ -26,7 +24,10 @@ RUN tar -xf wordpress.tar &&\
 	mv wordpress /var/www/html/wordpress
 
 # создание SSl
-RUN openssl req -x509 -nodes -days 365 -subj "/C=RU/ST=/L=Moscow/O=/OU=/CN=cyuuki" -newkey rsa:2048 -keyout /etc/ssl/nginx-selfsigned.key -out /etc/ssl/nginx-selfsigned.crt
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+	-subj "/C=RU/ST=/L=Moscow/O=/OU=/CN=cyuuki" \
+	-keyout /etc/ssl/nginx-selfsigned.key \
+	-out /etc/ssl/nginx-selfsigned.crt
 
 COPY /srcs/default /etc/nginx/sites-available
 
